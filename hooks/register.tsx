@@ -23,6 +23,7 @@ const ARGUMENT_HINT = '[small|medium|large|hide|show]'
 const USAGE = `Usage: /pet ${ARGUMENT_HINT}. With no argument it hides or shows the pet.`
 const CAPTION_COLUMNS = 24
 const COLUMN_GAP = 2
+const LABEL_COLUMNS = 10
 
 const mood = atom({ plugin: 'tiny-pet', key: 'mood' } as const, 'idle')
 const frame = atom({ plugin: 'tiny-pet', key: 'frame' } as const, 0)
@@ -64,7 +65,7 @@ const caption = (current: Mood, activity: Activity, label: string | null, second
   const crewNote = helpers > 0 ? ` · ${helpers} helper${helpers === 1 ? '' : 's'}` : ''
   switch (current) {
     case 'working': {
-      const tail = DETAILS[activity] ?? (label ? `${label} · ${seconds}s` : `${seconds}s`)
+      const tail = DETAILS[activity] ?? (label ? `${clip(label.split('__').pop() ?? label, CAPTION_COLUMNS - 8)} · ${seconds}s` : `${seconds}s`)
       return { title: TITLES[activity], detail: `${tail}${crewNote}` }
     }
     case 'done':
@@ -254,7 +255,7 @@ export const register: Register = (on, options) => {
         : elements.Svg({ source: toSvg(pixels, SVG_SCALE * scale), alt: `Claude pet is ${current}` })
 
     const room = e.props.bodyColumns - main.columns - CAPTION_COLUMNS - COLUMN_GAP * 2
-    const { shown, overflow } = fitCrew(members, room, mini.columns + 1)
+    const { shown, overflow } = fitCrew(members, room, Math.max(mini.columns, LABEL_COLUMNS) + 1)
 
     const minis = shown.map((member, index) => {
       const sprite = drawMini(member, tick + index, now)
@@ -265,10 +266,10 @@ export const register: Register = (on, options) => {
       const note = noteFor(member, now)
 
       return (
-        <Box key={member.id} flexDirection="column" width={Math.max(mini.columns, 9)}>
+        <Box key={member.id} flexDirection="column" width={Math.max(mini.columns, LABEL_COLUMNS)}>
           {picture}
-          <Text bold color={hex(colorFor(member.kind))}>{clip(labelFor(member.kind), Math.max(mini.columns, 9))}</Text>
-          <Text dimColor>{clip(note, Math.max(mini.columns, 9))}</Text>
+          <Text bold color={hex(colorFor(member.kind))}>{clip(labelFor(member.kind), Math.max(mini.columns, LABEL_COLUMNS))}</Text>
+          <Text dimColor>{clip(note, Math.max(mini.columns, LABEL_COLUMNS))}</Text>
         </Box>
       )
     })

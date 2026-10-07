@@ -113,7 +113,7 @@ const drawScreen = (px: Pixels, activity: Activity, frame: number) => {
       break
     }
     case 'asking':
-      dots(px, frame % 2 === 0 ? C.amber : C.white, [[13, 2], [14, 2], [15, 3], [14, 4], [14, 5]])
+      dots(px, frame % 2 === 0 ? C.amber : C.white, [[13, 2], [14, 2], [15, 3], [14, 5]])
       break
     case 'alarmed':
       if (frame % 2 === 0) fill(px, 11, 2, 6, 4, ALARM_BG)
@@ -219,9 +219,9 @@ const drawProps = (px: Pixels, activity: Activity, frame: number) => {
       dots(px, frame % 2 === 0 ? C.amber : C.light, [[4, 0]])
       break
     case 'sleepy':
-      fill(px, 7, 0, 3, 1, frame % 2 === 0 ? C.white : C.slate)
-      fill(px, 7, 3, 3, 1, frame % 2 === 0 ? C.white : C.slate)
-      dots(px, frame % 2 === 0 ? C.white : C.slate, [[9, 1], [8, 2]])
+      fill(px, 6, 0, 3, 1, frame % 2 === 0 ? C.white : C.slate)
+      fill(px, 6, 3, 3, 1, frame % 2 === 0 ? C.white : C.slate)
+      dots(px, frame % 2 === 0 ? C.white : C.slate, [[8, 1], [7, 2]])
       break
     case 'browsing':
       dots(px, C.blue, [[12 + (frame % 3) * 2, 0]])
