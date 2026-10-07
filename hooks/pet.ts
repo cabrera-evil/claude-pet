@@ -8,6 +8,7 @@ const PHONE_BAND = 0x4b5563
 const PHONE_CUP = 0x374151
 const BOOK_A = 0x60a5fa
 const BOOK_B = 0xfbbf24
+const BOOK_SPINE = 0x2563eb
 const SWEAT = 0x60a5fa
 
 const LINE_LENGTHS = [5, 3, 7, 4, 6, 2, 5, 7, 3, 6] as const
@@ -203,8 +204,13 @@ const drawProps = (px: Pixels, activity: Activity, frame: number) => {
       fill(px, 12, 3, 1, 4, PHONE_CUP)
       break
     case 'researching':
-      fill(px, 0, 13, 5, 1, BOOK_B)
-      fill(px, 1, 12, 4, 1, BOOK_A)
+      fill(px, 2, 7, 4, 1, C.white)
+      fill(px, 7, 7, 4, 1, C.white)
+      dots(px, BOOK_SPINE, [[6, 7]])
+      fill(px, 1, 8, 11, 3, BOOK_A)
+      fill(px, 6, 8, 1, 3, BOOK_SPINE)
+      fill(px, 3, 9, 2, 1, BOOK_B)
+      dots(px, BOOK_B, [[9, 11], [9, 12 - (frame % 2)]])
       break
     case 'running':
       if (frame % 2 === 0) dots(px, C.green, [[25, 0]])

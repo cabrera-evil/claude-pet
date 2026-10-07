@@ -37,7 +37,7 @@ While working, the main pet and every subagent act out what they are doing, judg
 | ----------- | ----------------------------------------------------------------- | -------------------------------------------------------------------- |
 | thinking    | Between tool calls                                                | Eyes look up, thought dots above the head, a blinking cursor         |
 | coding      | Edit, Write, MultiEdit, NotebookEdit                              | Headphones, hands typing, colored code scrolling                     |
-| reading     | Read, Grep, Glob, LS                                              | Wide scanning eyes, a stack of books, a highlight moving over text   |
+| reading     | Read, Grep, Glob, LS                                              | Wide scanning eyes, holding an open book up to read, a highlight moving over text |
 | running     | Bash                                                              | Squinting at a green terminal, a blinking status light               |
 | browsing    | WebFetch, WebSearch                                               | A web page on screen, a wifi blip above the laptop                   |
 | testing     | Playwright and Chrome DevTools MCP tools                          | A bubbling lab tube, a test checklist ticking and a progress bar     |
