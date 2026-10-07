@@ -76,11 +76,11 @@ The `size` option scales the whole pet, including the subagent crew:
 
 | Value  | Scale | Main pet (columns x rows) |
 | ------ | ----- | ------------------------- |
-| small  | half  | 14 x 7                    |
+| small  | half  | 14 x 4                    |
 | medium | 1x    | 27 x 7 (default)          |
 | large  | 2x    | 54 x 14                   |
 
-Small uses quadrant block characters, so it keeps full detail at half size. Large needs a wide and tall terminal, and fewer mini pets fit beside it. On the desktop Code tab the SVG scales by the same factor.
+Every size scales width and height together, so the pet keeps its proportions. Small halves the art in both directions and keeps the eyes and other dark details visible. Large needs a wide and tall terminal, and fewer mini pets fit beside it. If the space above the prompt is too short for the chosen size, the pet steps down to the next size that fits instead of being cut off. On the desktop Code tab the SVG scales by the same factor.
 
 Change it with `/pet small`, `/pet medium` or `/pet large`. It applies immediately, even in the middle of a turn, and is remembered across sessions.
 
@@ -154,7 +154,7 @@ Layout:
 - `hooks/mini.ts`: the mini subagent pets, their desks and per-personality art.
 - `docs/`: the preview images used by this README.
 - `hooks/crew.ts`: the logic that fits the crew into the available width.
-- `hooks/render.ts`: converts the pixels to a terminal cell grid (half or quadrant blocks, scaled) or an SVG.
+- `hooks/render.ts`: converts the pixels to a terminal cell grid (half-block characters, scaled up or down) or an SVG.
 - `types/index.d.ts`: the state contract the module is validated against.
 
 ## License

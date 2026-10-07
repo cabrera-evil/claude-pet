@@ -77,6 +77,9 @@ const caption = (current: Mood, activity: Activity, label: string | null, second
   }
 }
 
+const fitScale = (wanted: number, maxRows: number) =>
+  [2, 1, 0.5].filter(candidate => candidate <= wanted).find(candidate => cellSize(WIDTH, HEIGHT, candidate).rows <= maxRows) ?? 0.5
+
 const statusFor = (reason: string): MemberStatus => (reason === 'answer' ? 'done' : 'error')
 
 let ticker: { cancel: () => void } | null = null
@@ -239,7 +242,7 @@ export const register: Register = (on, options) => {
     const activity = current === 'working' ? activityFor({ tool: label, since: await read($, toolSince), alert: await read($, alert) }, now) : 'thinking'
     const pixels = draw(current, tick, activity)
     const { title, detail } = caption(current, activity, label, seconds, members.filter(isActive).length)
-    const scale = SIZES[await read($, size)] ?? 1
+    const scale = fitScale(SIZES[await read($, size)] ?? 1, e.props.maxRows)
     const main = cellSize(WIDTH, HEIGHT, scale)
     const mini = cellSize(MINI_WIDTH, MINI_HEIGHT, scale)
     const elements = $.ui.resolve(e)
