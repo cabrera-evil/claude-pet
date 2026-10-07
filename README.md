@@ -62,9 +62,11 @@ Too many subagents to show:
 
 The main caption shows how many helpers are working, and the pet says "Supervising" when only subagents are running.
 
-Commands:
+Commands (the typeahead shows `/pet [small|medium|large|hide|show]`):
 
 - `/pet`: hide or show the pet.
+- `/pet hide` and `/pet show`: hide or show it explicitly.
+- `/pet small`, `/pet medium`, `/pet large`: resize it, see Size below.
 
 The band stays hidden only while the session has no input, so an empty session shows just the native welcome. The pet appears and starts working the moment you submit your first message. Slash commands do not count as input, and a resumed session shows it right away. It is also hidden while a survey is shown. It is drawn on the terminal and on the desktop Code tab. The terminal gets a true-color cell grid, the desktop gets an SVG of the same art.
 
@@ -80,7 +82,9 @@ The `size` option scales the whole pet, including the subagent crew:
 
 Small uses quadrant block characters, so it keeps full detail at half size. Large needs a wide and tall terminal, and fewer mini pets fit beside it. On the desktop Code tab the SVG scales by the same factor.
 
-Set it in the options screen shown at install time, or later from the config menu where the plugin options are listed. A change reloads the mod with the new size.
+Change it with `/pet small`, `/pet medium` or `/pet large`. It applies immediately, even in the middle of a turn, and is remembered across sessions.
+
+The `size` option in the plugin's options screen (shown at install time and in the config menu) sets the default for when no size has been chosen with `/pet`. Once you run `/pet <size>`, that choice wins over the option.
 
 ## Install
 

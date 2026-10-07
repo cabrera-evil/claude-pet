@@ -13,6 +13,6 @@ export type Member = {
 
 declare module 'claude-code' {
   interface PluginState {
-    'tiny-pet': { mood: Mood; frame: number; tool: string | null; toolSince: number; alert: boolean; isHidden: boolean; hasStarted: boolean; crew: Member[] }
+    'tiny-pet': { mood: Mood; frame: number; tool: string | null; toolSince: number; alert: boolean; isHidden: boolean; hasStarted: boolean; size: string; crew: Member[] }
   }
 }
