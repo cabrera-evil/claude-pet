@@ -102,6 +102,15 @@ const drawScreen = (px: Pixels, activity: Activity, frame: number) => {
       fill(px, 11, 4, 2, 2, frame % 2 === 0 ? C.green : C.amber)
       fill(px, 15, 4, 2, 2, frame % 2 === 0 ? C.amber : C.green)
       break
+    case 'testing': {
+      const passed = Math.floor(frame / 2) % 3
+      for (const [row, y] of [2, 4].entries()) {
+        fill(px, 11, y, 2, 1, row < passed ? C.green : C.slate)
+        fill(px, 14, y, 3, 1, C.slate)
+      }
+      fill(px, 11, 5, ((frame % 3) + 1) * 2, 1, C.blue)
+      break
+    }
     case 'asking':
       dots(px, frame % 2 === 0 ? C.amber : C.white, [[13, 2], [14, 2], [15, 3], [14, 4], [14, 5]])
       break
@@ -193,6 +202,11 @@ const drawProps = (px: Pixels, activity: Activity, frame: number) => {
       dots(px, C.slate, lift === 0 ? [[2 - (frame % 2), 3], [3, 4 - (frame % 2)]] : [])
       break
     }
+    case 'testing':
+      fill(px, 1, 5, 3, 3, C.edge)
+      fill(px, 2, 6, 1, 2, C.green)
+      dots(px, C.white, [[2, 4 - (frame % 2)]])
+      break
     case 'alarmed':
       dots(px, C.red, [[9, 0], [17, 0]])
       break
@@ -201,7 +215,9 @@ const drawProps = (px: Pixels, activity: Activity, frame: number) => {
       dots(px, frame % 2 === 0 ? C.amber : C.light, [[4, 0]])
       break
     case 'sleepy':
-      dots(px, C.white, [[3 + (frame % 2), 1 - (frame % 2)], [6, 0]])
+      fill(px, 7, 0, 3, 1, frame % 2 === 0 ? C.white : C.slate)
+      fill(px, 7, 3, 3, 1, frame % 2 === 0 ? C.white : C.slate)
+      dots(px, frame % 2 === 0 ? C.white : C.slate, [[9, 1], [8, 2]])
       break
     case 'browsing':
       dots(px, C.blue, [[12 + (frame % 3) * 2, 0]])
@@ -227,7 +243,7 @@ const drawPet = (px: Pixels, member: Mini, frame: number, activity: Activity) =>
 
   if (status === 'working') {
     drawEyes(activity, frame, at)
-    const isTyping = ['coding', 'running', 'tooling', 'planning', 'delegating'].includes(activity)
+    const isTyping = ['coding', 'running', 'tooling', 'planning', 'delegating', 'testing'].includes(activity)
     const isRaised = activity === 'alarmed'
     at(0, isRaised ? 3 : activity === 'asking' ? 3 + beat : 5 + (isTyping ? beat : 0), 1, 2, C.body)
     at(9, isRaised ? 3 : 5, 1, 2, C.body)

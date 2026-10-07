@@ -19,8 +19,15 @@ const DROP_BOXES = [C.green, C.amber] as const
 type Draw = (x: number, y: number, w: number, h: number, color: number) => void
 type Point = readonly [number, number]
 
-const TYPING = new Set<Activity>(['coding', 'running', 'tooling', 'planning', 'delegating'])
+const TYPING = new Set<Activity>(['coding', 'running', 'tooling', 'planning', 'delegating', 'testing'])
 const POINTS_QUESTION: readonly Point[] = [[19, 2], [20, 2], [21, 2], [18, 3], [22, 3], [22, 4], [21, 5], [20, 5], [20, 6], [20, 8]]
+
+const drawZ = (px: Pixels, frame: number) => {
+  const y = 1 - (frame % 2)
+  fill(px, 12, y, 3, 1, C.white)
+  fill(px, 12, y + 4, 3, 1, C.white)
+  dots(px, C.white, [[14, y + 1], [13, y + 2], [12, y + 3]])
+}
 
 const drawScreen = (px: Pixels, mood: Mood, activity: Activity, frame: number) => {
   fill(px, 15, 1, 11, 9, 0x2d3340)
@@ -84,6 +91,15 @@ const drawScreen = (px: Pixels, mood: Mood, activity: Activity, frame: number) =
       fill(px, 17, 5, 7, 1, C.slate)
       fill(px, 16, 6, 3, 2, DROP_BOXES[frame % 2])
       fill(px, 22, 6, 3, 2, DROP_BOXES[(frame + 1) % 2])
+      break
+    }
+    case 'testing': {
+      const passed = Math.floor(frame / 2) % 4
+      for (const [row, y] of [2, 4, 6].entries()) {
+        fill(px, 16, y, 2, 1, row < passed ? C.green : C.slate)
+        fill(px, 19, y, 5, 1, C.slate)
+      }
+      fill(px, 16, 8, ((frame % 5) + 1) * 2 - 1, 1, C.blue)
       break
     }
     case 'asking':
@@ -211,12 +227,14 @@ const drawProps = (px: Pixels, activity: Activity, frame: number) => {
       dots(px, C.slate, lift === 0 ? [[1 - (frame % 2), 8], [2, 7 - (frame % 2)]] : [])
       break
     }
-    case 'sleepy': {
-      const lift = frame % 2
-      dots(px, C.white, [[9, 1 - lift], [10, 1 - lift], [11, 1 - lift], [10, 2 - lift], [9, 3 - lift], [10, 3 - lift], [11, 3 - lift]])
-      dots(px, C.key, [[13, 0], [14, 0]])
+    case 'sleepy':
+      drawZ(px, frame)
       break
-    }
+    case 'testing':
+      fill(px, 0, 10, 4, 4, C.edge)
+      fill(px, 1, 11, 2, 3, C.green)
+      dots(px, C.white, [[2, 9 - (frame % 2)], [1, 8 - (frame % 3 === 0 ? 1 : 0)]])
+      break
     case 'alarmed':
       dots(px, C.red, [[0, 1], [26, 1], [1, 0], [25, 0]])
       break
@@ -224,12 +242,6 @@ const drawProps = (px: Pixels, activity: Activity, frame: number) => {
       for (const i of [0, 1, 2]) dots(px, i === frame % 3 ? C.white : C.key, [[3 + i * 2, 1]])
       break
   }
-}
-
-const drawIdleSleep = (px: Pixels, frame: number) => {
-  const lift = frame % 2
-  dots(px, C.white, [[9, 1 - lift], [10, 1 - lift], [11, 1 - lift], [10, 2 - lift], [9, 3 - lift], [10, 3 - lift], [11, 3 - lift]])
-  dots(px, C.key, [[13, 0], [14, 0]])
 }
 
 export const draw = (mood: Mood, frame: number, activity: Activity): Pixels => {
@@ -246,6 +258,6 @@ export const draw = (mood: Mood, frame: number, activity: Activity): Pixels => {
   drawArms(px, mood, activity, frame, at)
   drawEyes(mood, activity, frame, at, px)
   if (mood === 'working') drawProps(px, activity, frame)
-  if (mood === 'idle') drawIdleSleep(px, frame)
+  if (mood === 'idle') drawZ(px, frame)
   return px
 }

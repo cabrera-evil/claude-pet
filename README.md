@@ -10,11 +10,11 @@ The pet with a crew of four subagents (reading, planning, taking a coffee break,
 
 The main pet in each of its personalities and states:
 
-![Main pet: thinking, coding, reading, running, browsing, working, planning, delegating, asking, coffee, sleepy, error found, done, error, idle](docs/pet.png)
+![Main pet: thinking, coding, reading, running, browsing, testing, working, planning, delegating, asking, coffee, sleepy, error found, done, error, idle](docs/pet.png)
 
 A subagent in each of its looks:
 
-![Subagent looks: thinking, coding, reading, running, browsing, working, planning, delegating, asking, coffee, sleepy, alarmed, done, failed](docs/crew.png)
+![Subagent looks: thinking, coding, reading, running, browsing, testing, working, planning, delegating, asking, coffee, sleepy, alarmed, done, failed](docs/crew.png)
 
 These images are drawn from the same pixel code the mod uses. The terminal shows them in true color with half-block characters, so they look the same up to the terminal's cell shape.
 
@@ -40,12 +40,13 @@ While working, the main pet and every subagent act out what they are doing, judg
 | reading     | Read, Grep, Glob, LS                                              | Wide scanning eyes, a stack of books, a highlight moving over text   |
 | running     | Bash                                                              | Squinting at a green terminal, a blinking status light               |
 | browsing    | WebFetch, WebSearch                                               | A web page on screen, a wifi blip above the laptop                   |
+| testing     | Playwright and Chrome DevTools MCP tools                          | A bubbling lab tube, a test checklist ticking and a progress bar     |
 | planning    | TodoWrite, plan mode tools                                        | Eyes up and to the side, a checklist being ticked off                |
 | delegating  | Task, Agent, SendMessage                                          | A blinking antenna, a tree of boxes passing work down                |
 | asking      | AskUserQuestion                                                   | A raised hand and a blinking question mark                           |
 | working     | Any other tool, including MCP tools                               | Blinking indicator lights on screen and a spark                      |
 | coffee      | Quiet for 6 seconds, or a Bash command running over 12 seconds   | Sips a mug of coffee with steam while it waits                       |
-| sleepy      | Quiet for 25 seconds                                              | Heavy eyelids, a dim screen and a floating z                         |
+| sleepy      | Quiet for 25 seconds                                              | Heavy eyelids, a dim screen and a floating Z                         |
 | error found | A tool call returned an error, for 3 seconds                      | Arms up and a hop, a sweat drop, a flashing red warning on screen    |
 
 ### Subagent crew

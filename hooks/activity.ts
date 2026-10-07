@@ -4,6 +4,7 @@ export type Activity =
   | 'researching'
   | 'running'
   | 'browsing'
+  | 'testing'
   | 'tooling'
   | 'planning'
   | 'delegating'
@@ -18,6 +19,7 @@ const COFFEE_AFTER_MS = 6000
 const SLEEPY_AFTER_MS = 25000
 const SLOW_COMMAND_MS = 12000
 
+const TEST_TOOLS = /playwright|chrome-devtools/i
 const READ_TOOLS = new Set(['Read', 'Grep', 'Glob', 'LS', 'NotebookRead'])
 const WRITE_TOOLS = new Set(['Edit', 'Write', 'MultiEdit', 'NotebookEdit'])
 const WEB_TOOLS = new Set(['WebFetch', 'WebSearch'])
@@ -30,6 +32,7 @@ export const VERBS: Record<Activity, string> = {
   researching: 'reading',
   running: 'running',
   browsing: 'browsing',
+  testing: 'testing',
   tooling: 'working',
   planning: 'planning',
   delegating: 'delegating',
@@ -40,6 +43,7 @@ export const VERBS: Record<Activity, string> = {
 }
 
 export const activityOf = (tool: string): Activity => {
+  if (TEST_TOOLS.test(tool)) return 'testing'
   if (READ_TOOLS.has(tool)) return 'researching'
   if (WRITE_TOOLS.has(tool)) return 'coding'
   if (tool === 'Bash') return 'running'

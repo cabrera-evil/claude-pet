@@ -44,6 +44,7 @@ const TITLES: Record<Activity, string> = {
   researching: 'Reading',
   running: 'Running',
   browsing: 'Browsing',
+  testing: 'Testing',
   tooling: 'Working',
   planning: 'Planning',
   delegating: 'Delegating',
