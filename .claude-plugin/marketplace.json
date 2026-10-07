@@ -1,0 +1,12 @@
+{
+  "name": "tiny-pet",
+  "description": "Claude Code mods by Douglas Cabrera",
+  "owner": { "name": "Douglas Cabrera" },
+  "plugins": [
+    {
+      "name": "tiny-pet",
+      "description": "A tiny Claude pet with its own little computer that works alongside you in Claude Code.",
+      "source": "./"
+    }
+  ]
+}

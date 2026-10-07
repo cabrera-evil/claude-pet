@@ -1,0 +1,22 @@
+{
+  "name": "tiny-pet",
+  "version": "0.8.2",
+  "author": {
+    "name": "Douglas Cabrera"
+  },
+  "description": "A tiny Claude pet with its own little computer that works alongside you in Claude Code.",
+  "types": "./types/index.d.ts",
+  "userConfig": {
+    "size": {
+      "type": "string",
+      "title": "Pet size",
+      "description": "How big the pet and its subagent crew are drawn: small (half), medium, or large (double).",
+      "default": "medium",
+      "options": [
+        "small",
+        "medium",
+        "large"
+      ]
+    }
+  }
+}
