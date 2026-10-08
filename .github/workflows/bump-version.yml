@@ -1,0 +1,51 @@
+name: Bump version
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "hooks/**"
+      - "types/**"
+      - ".claude-plugin/marketplace.json"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: bump-version-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  bump:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Bump plugin version
+        run: |
+          set -euo pipefail
+
+          base="${{ github.event.before }}"
+          if [ "$base" = "0000000000000000000000000000000000000000" ]; then
+            base="$(git rev-list --max-parents=0 HEAD)"
+          fi
+          python3 scripts/bump-version.py --changed-from "$base" --changed-to "${{ github.sha }}"
+
+      - name: Commit version bump
+        run: |
+          set -euo pipefail
+
+          if git diff --quiet -- .claude-plugin/plugin.json; then
+            echo "Version unchanged; nothing to commit."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .claude-plugin/plugin.json
+          git commit -m "chore(update): version bump"
+          git push
