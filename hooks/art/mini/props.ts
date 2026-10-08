@@ -1,4 +1,5 @@
-import { C, type Pixels, dots, drawZs, fill } from '../pixels'
+import { C, type Pixels, dots, fill } from '../pixels'
+import { bang, ghost, question, wisp, zed } from '../ghost'
 import { COFFEE, PHONE_BAND, PHONE_CUP, BOOK_A, BOOK_B, BOOK_SPINE } from '../palette'
 import type { Activity } from '../../logic/activity'
 
@@ -24,7 +25,7 @@ export const drawProps = (px: Pixels, activity: Activity, frame: number) => {
       fill(px, 1, 5 + lift, 3, 3, C.white)
       fill(px, 1, 5 + lift, 3, 1, COFFEE)
       dots(px, C.edge, [[4, 6 + lift]])
-      dots(px, C.slate, lift === 0 ? [[2 - (frame % 2), 3], [3, 4 - (frame % 2)]] : [])
+      ghost(px, [...wisp(1, 4 + lift, frame % 2 === 0, 0.85), ...wisp(3, 4 + lift, frame % 2 !== 0, 0.85)])
       break
     }
     case 'testing':
@@ -33,23 +34,23 @@ export const drawProps = (px: Pixels, activity: Activity, frame: number) => {
       dots(px, C.white, [[2, 4 - (frame % 2)]])
       break
     case 'alarmed':
-      dots(px, C.red, [[9, 0], [17, 0]])
+      ghost(px, [...bang(3, frame % 2, 3, 0.9), ...bang(6, frame % 2, 3, 0.9)], C.red)
       break
     case 'delegating':
       dots(px, C.shade, [[4, 1]])
       dots(px, frame % 2 === 0 ? C.amber : C.light, [[4, 0]])
       break
     case 'sleepy':
-      drawZs(px, [
-        { x: 7, y: 1 + (frame % 2), size: 3, alpha: 0.4 },
-        { x: 11, y: 0 + (frame % 2), size: 4, alpha: 0.6 },
-      ])
+      ghost(px, [...zed(7, 1 + (frame % 2), 3, 0.4), ...zed(11, frame % 2, 4, 0.6)])
       break
     case 'browsing':
       dots(px, C.blue, [[12 + (frame % 3) * 2, 0]])
       break
     case 'tooling':
       dots(px, C.amber, [[frame % 2 === 0 ? 9 : 17, 0]])
+      break
+    case 'asking':
+      ghost(px, question(10, frame % 2, 0.85))
       break
     default:
       for (const i of [0, 1, 2]) dots(px, i === frame % 3 ? C.white : C.key, [[3 + i * 2, 0]])

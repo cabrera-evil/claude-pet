@@ -43,26 +43,3 @@ export const fill = (px: Pixels, x: number, y: number, w: number, h: number, col
 export const dots = (px: Pixels, color: number, points: readonly Point[]) => {
   for (const [x, y] of points) fill(px, x, y, 1, 1, color)
 }
-
-const mix = (from: number, to: number, alpha: number) =>
-  [16, 8, 0].reduce((out, shift) => {
-    const a = (from >> shift) & 0xff
-    const b = (to >> shift) & 0xff
-    return out | (Math.round(a + (b - a) * alpha) << shift)
-  }, 0)
-
-export type Zed = { x: number; y: number; size: number; alpha: number }
-
-export const drawZs = (px: Pixels, zs: readonly Zed[]) => {
-  for (const { x, y, size, alpha } of zs) {
-    const cells: Point[] = [
-      ...Array.from({ length: size }, (_, i): Point => [x + i, y]),
-      ...Array.from({ length: size }, (_, i): Point => [x + i, y + size - 1]),
-      ...Array.from({ length: size - 2 }, (_, i): Point => [x + size - 2 - i, y + 1 + i]),
-    ]
-    for (const [cx, cy] of cells) {
-      const under = px[cy]?.[cx]
-      if (under !== undefined) px[cy][cx] = mix(under === CLEAR ? C.key : under, C.white, alpha)
-    }
-  }
-}

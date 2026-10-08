@@ -1,6 +1,7 @@
 import { C, type Pixels, dots, fill } from '../pixels'
 import { COFFEE, PHONE_BAND, PHONE_CUP, BOOK_A, BOOK_B, BOOK_SPINE } from '../palette'
 import type { Activity } from '../../logic/activity'
+import { bang, cloud, ghost, question, wisp } from '../ghost'
 import { drawZ } from './body'
 
 export const drawProps = (px: Pixels, activity: Activity, frame: number) => {
@@ -37,7 +38,7 @@ export const drawProps = (px: Pixels, activity: Activity, frame: number) => {
       fill(px, 0, 10 + lift, 4, 4, C.white)
       fill(px, 0, 10 + lift, 4, 1, COFFEE)
       fill(px, 4, 11 + lift, 1, 2, C.edge)
-      dots(px, C.slate, lift === 0 ? [[1 - (frame % 2), 8], [2, 7 - (frame % 2)]] : [])
+      ghost(px, [...wisp(1, 9 + lift, frame % 2 === 0, 0.85), ...wisp(3, 9 + lift, frame % 2 !== 0, 0.85)])
       break
     }
     case 'sleepy':
@@ -49,10 +50,14 @@ export const drawProps = (px: Pixels, activity: Activity, frame: number) => {
       dots(px, C.white, [[2, 9 - (frame % 2)], [1, 8 - (frame % 3 === 0 ? 1 : 0)]])
       break
     case 'alarmed':
-      dots(px, C.red, [[0, 1], [26, 1], [1, 0], [25, 0]])
+      ghost(px, [...bang(3, frame % 2, 3, 0.8), ...bang(9, frame % 2, 4, 0.95)], C.red)
       break
     case 'thinking':
-      for (const i of [0, 1, 2]) dots(px, i === frame % 3 ? C.white : C.key, [[3 + i * 2, 1]])
+      ghost(px, cloud(7, 0, 0.5))
+      for (const i of [0, 1, 2]) dots(px, i === frame % 3 ? C.white : C.key, [[8 + i * 2, 1]])
+      break
+    case 'asking':
+      ghost(px, question(10, frame % 2, 0.85))
       break
   }
 }

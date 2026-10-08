@@ -35,7 +35,7 @@ While working, the main pet and every subagent act out what they are doing, judg
 
 | Personality | When                                                              | What you see                                                         |
 | ----------- | ----------------------------------------------------------------- | -------------------------------------------------------------------- |
-| thinking    | Between tool calls                                                | Eyes look up, thought dots above the head, a blinking cursor         |
+| thinking    | Between tool calls                                                | Eyes look up, a thought cloud with cycling dots above the head, a blinking cursor |
 | coding      | Edit, Write, MultiEdit, NotebookEdit                              | Headphones, hands typing, colored code scrolling                     |
 | reading     | Read, Grep, Glob, LS                                              | Wide scanning eyes, holding an open book up to read, a highlight moving over text |
 | running     | Bash                                                              | Squinting at a green terminal, a blinking status light               |
@@ -43,11 +43,11 @@ While working, the main pet and every subagent act out what they are doing, judg
 | testing     | Playwright and Chrome DevTools MCP tools                          | A bubbling lab tube, a test checklist ticking and a progress bar     |
 | planning    | TodoWrite, plan mode tools                                        | Eyes up and to the side, a checklist being ticked off                |
 | delegating  | Task, Agent, SendMessage                                          | A blinking antenna, a tree of boxes passing work down                |
-| asking      | AskUserQuestion                                                   | A raised hand and a blinking question mark                           |
+| asking      | AskUserQuestion                                                   | A raised hand, a blinking question mark, a faint one floating off the head|
 | working     | Any other tool, including MCP tools                               | Blinking indicator lights on screen and a spark                      |
-| coffee      | Quiet for 6 seconds, or a Bash command running over 12 seconds   | Sips a mug of coffee with steam while it waits                       |
-| sleepy      | Quiet for 25 seconds                                              | Heavy eyelids, a dim screen and floating Zzz that grow                         |
-| error found | A tool call returned an error, for 3 seconds                      | Arms up and a hop, a sweat drop, a flashing red warning on screen    |
+| coffee      | Quiet for 6 seconds, or a Bash command running over 12 seconds   | Sips a mug of coffee with translucent steam wisps while it waits|
+| sleepy      | Quiet for 25 seconds                                              | Heavy eyelids, a dim screen and floating Zzz that grow                            |
+| error found | A tool call returned an error, for 3 seconds                      | Arms up and a hop, a sweat drop, red ! marks over the head, a flashing red warning on screen|
 
 ### Subagent crew
 

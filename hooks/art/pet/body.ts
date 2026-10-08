@@ -1,15 +1,12 @@
-import { C, type Draw, type Pixels, dots, drawZs, fill } from '../pixels'
+import { C, type Draw, type Pixels, dots, fill } from '../pixels'
+import { ghost, zed } from '../ghost'
 import type { Mood } from '../../../types'
 import type { Activity } from '../../logic/activity'
 import { TYPING } from './constants'
 
 export const drawZ = (px: Pixels, frame: number) => {
   const bob = frame % 2
-  drawZs(px, [
-    { x: 10, y: 2 + bob, size: 3, alpha: 0.35 },
-    { x: 14, y: 1 + bob, size: 4, alpha: 0.5 },
-    { x: 19, y: 0 + bob, size: 5, alpha: 0.65 },
-  ])
+  ghost(px, [...zed(10, 2 + bob, 3, 0.35), ...zed(14, 1 + bob, 4, 0.5), ...zed(19, bob, 5, 0.65)])
 }
 
 export const drawArms = (px: Pixels, mood: Mood, activity: Activity, frame: number, at: Draw) => {
