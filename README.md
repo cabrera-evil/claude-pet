@@ -149,13 +149,13 @@ Layout:
 - `.claude-plugin/marketplace.json`: makes this repository installable as a marketplace.
 - `hooks/hooks.json`: names the hooks module.
 - `hooks/register.tsx`: events, state and the band drawing.
-- `hooks/pixels.ts`: pixel canvas helpers and the shared color palette.
-- `hooks/activity.ts`: decides which personality applies from the tool in use, its timing and errors.
-- `hooks/pet.ts`: the main pet and laptop art for every state and personality. Change colors and shapes here.
-- `hooks/mini.ts`: the mini subagent pets, their desks and per-personality art.
+- `hooks/art/pixels.ts`: pixel canvas helpers and the shared color palette.
+- `hooks/logic/activity.ts`: decides which personality applies from the tool in use, its timing and errors.
+- `hooks/art/pet.ts`: the main pet and laptop art for every state and personality. Change colors and shapes here.
+- `hooks/art/mini.ts`: the mini subagent pets, their desks and per-personality art.
 - `docs/`: the preview images used by this README.
-- `hooks/crew.ts`: the logic that fits the crew into the available width.
-- `hooks/render.ts`: converts the pixels to a terminal cell grid (half-block characters, scaled up or down) or an SVG.
+- `hooks/logic/crew.ts`: the logic that fits the crew into the available width.
+- `hooks/render/render.ts`: converts the pixels to a terminal cell grid (half-block characters, scaled up or down) or an SVG.
 - `types/index.d.ts`: the state contract the module is validated against.
 
 ## License

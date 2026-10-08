@@ -1,5 +1,5 @@
-import type { Member } from '../types'
-import { activityFor, VERBS, type Activity } from './activity'
+import type { Member } from '../../types'
+import { activityFor, VERBS, type Activity } from '../logic/activity'
 import { C, canvas, dots, fill, type Pixels } from './pixels'
 
 export const MINI_WIDTH = 18

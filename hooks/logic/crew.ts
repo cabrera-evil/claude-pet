@@ -1,4 +1,4 @@
-import type { Member } from '../types'
+import type { Member } from '../../types'
 
 export const OVERFLOW_COLUMNS = 10
 

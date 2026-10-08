@@ -1,5 +1,5 @@
-import type { Mood } from '../types'
-import type { Activity } from './activity'
+import type { Mood } from '../../types'
+import type { Activity } from '../logic/activity'
 import { C, canvas, dots, fill, type Pixels } from './pixels'
 
 const COFFEE = 0x6b4423

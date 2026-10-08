@@ -2,12 +2,12 @@ import { atom, read, update } from 'claude-code'
 import type { EngineInterface, Register } from 'claude-code'
 
 import type { Member, MemberStatus, Mood } from '../types'
-import { activityFor, type Activity } from './activity'
-import { fitCrew, OVERFLOW_COLUMNS } from './crew'
-import { colorFor, drawMini, labelFor, MINI_HEIGHT, MINI_WIDTH, noteFor } from './mini'
-import { draw } from './pet'
-import { HEIGHT, WIDTH } from './pixels'
-import { cellSize, toCells, toSvg } from './render'
+import { activityFor, type Activity } from './logic/activity'
+import { fitCrew, OVERFLOW_COLUMNS } from './logic/crew'
+import { colorFor, drawMini, labelFor, MINI_HEIGHT, MINI_WIDTH, noteFor } from './art/mini'
+import { draw } from './art/pet'
+import { HEIGHT, WIDTH } from './art/pixels'
+import { cellSize, toCells, toSvg } from './render/render'
 
 const WORK_TICK_MS = 300
 const IDLE_TICK_MS = 900

@@ -1,4 +1,4 @@
-import type { Mood } from '../types'
+import type { Mood } from '../../types'
 
 export const WIDTH = 27
 export const HEIGHT = 14

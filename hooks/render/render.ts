@@ -1,4 +1,4 @@
-import { C, CLEAR, type Pixels } from './pixels'
+import { C, CLEAR, type Pixels } from '../art/pixels'
 
 const DEFAULT_COLOR = 0x01000000
 const UPPER_HALF = 0x2580
