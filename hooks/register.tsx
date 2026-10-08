@@ -1,29 +1,22 @@
 import { atom, read, update } from 'claude-code'
 import type { EngineInterface, Register } from 'claude-code'
 
-import type { Member, MemberStatus, Mood } from '../types'
-import { activityFor, type Activity } from './logic/activity'
-import { fitCrew, OVERFLOW_COLUMNS } from './logic/crew'
-import { colorFor, drawMini, labelFor, MINI_HEIGHT, MINI_WIDTH, noteFor } from './art/mini'
-import { draw } from './art/pet'
-import { HEIGHT, WIDTH } from './art/pixels'
-import { cellSize, toCells, toSvg } from './render/render'
-
-const WORK_TICK_MS = 300
-const IDLE_TICK_MS = 900
-const REST_MS = 5000
-const CREW_REST_MS = 3000
-const ALERT_MS = 3000
-const MAX_TRACKED = 64
-const SVG_SCALE = 6
-const SIZES: Record<string, number> = { small: 0.5, medium: 1, large: 2 }
-const SIZE_KEY = 'size'
-const isSize = (value: string) => Object.keys(SIZES).includes(value)
-const ARGUMENT_HINT = '[small|medium|large|hide|show]'
-const USAGE = `Usage: /pet ${ARGUMENT_HINT}. With no argument it hides or shows the pet.`
-const CAPTION_COLUMNS = 24
-const COLUMN_GAP = 2
-const LABEL_COLUMNS = 10
+import type { Member, Mood } from '../types'
+import { activityFor } from './logic/activity'
+import { isActive, statusFor } from './logic/crew'
+import { isSize } from './logic/size'
+import {
+  ALERT_MS,
+  ARGUMENT_HINT,
+  CREW_REST_MS,
+  IDLE_TICK_MS,
+  MAX_TRACKED,
+  REST_MS,
+  SIZE_KEY,
+  USAGE,
+  WORK_TICK_MS,
+} from './config'
+import { renderBand } from './view/band'
 
 const mood = atom({ plugin: 'tiny-pet', key: 'mood' } as const, 'idle')
 const frame = atom({ plugin: 'tiny-pet', key: 'frame' } as const, 0)
@@ -34,55 +27,6 @@ const isHidden = atom({ plugin: 'tiny-pet', key: 'isHidden' } as const, false)
 const hasStarted = atom({ plugin: 'tiny-pet', key: 'hasStarted' } as const, false)
 const size = atom({ plugin: 'tiny-pet', key: 'size' } as const, 'medium')
 const crew = atom({ plugin: 'tiny-pet', key: 'crew' } as const, [])
-
-const hex = (color: number) => `#${color.toString(16).padStart(6, '0')}`
-const clip = (text: string, width: number) => (text.length > width ? `${text.slice(0, width - 1)}~` : text)
-const isActive = (member: Member) => member.status === 'working'
-
-const TITLES: Record<Activity, string> = {
-  thinking: 'Thinking…',
-  coding: 'Coding',
-  researching: 'Reading',
-  running: 'Running',
-  browsing: 'Browsing',
-  testing: 'Testing',
-  tooling: 'Working',
-  planning: 'Planning',
-  delegating: 'Delegating',
-  asking: 'Asking you',
-  coffee: 'Coffee break',
-  sleepy: 'Getting sleepy…',
-  alarmed: 'Found an error!',
-}
-
-const DETAILS: Partial<Record<Activity, string>> = {
-  coffee: 'Waiting on the model',
-  sleepy: 'Waiting a long while',
-  alarmed: 'A tool call failed',
-}
-
-const caption = (current: Mood, activity: Activity, label: string | null, seconds: number, helpers: number) => {
-  const crewNote = helpers > 0 ? ` · ${helpers} helper${helpers === 1 ? '' : 's'}` : ''
-  switch (current) {
-    case 'working': {
-      const tail = DETAILS[activity] ?? (label ? `${clip(label.split('__').pop() ?? label, CAPTION_COLUMNS - 8)} · ${seconds}s` : `${seconds}s`)
-      return { title: TITLES[activity], detail: `${tail}${crewNote}` }
-    }
-    case 'done':
-      return { title: 'All done!', detail: helpers > 0 ? `${helpers} helper${helpers === 1 ? '' : 's'} still working` : 'Ready when you are' }
-    case 'error':
-      return { title: 'Oops', detail: 'Something went wrong' }
-    default:
-      return helpers > 0
-        ? { title: 'Supervising', detail: `${helpers} helper${helpers === 1 ? '' : 's'} at work` }
-        : { title: 'Zzz', detail: 'Napping by the laptop · /pet to hide or resize' }
-  }
-}
-
-const fitScale = (wanted: number, maxRows: number) =>
-  [2, 1, 0.5].filter(candidate => candidate <= wanted).find(candidate => cellSize(WIDTH, HEIGHT, candidate).rows <= maxRows) ?? 0.5
-
-const statusFor = (reason: string): MemberStatus => (reason === 'answer' ? 'done' : 'error')
 
 let ticker: { cancel: () => void } | null = null
 
@@ -242,58 +186,19 @@ export const register: Register = (on, options) => {
     const now = await $.clock.now()
     const seconds = current === 'working' ? Math.round((now - startedAt) / 1000) : 0
     const activity = current === 'working' ? activityFor({ tool: label, since: await read($, toolSince), alert: await read($, alert) }, now) : 'thinking'
-    const pixels = draw(current, tick, activity)
-    const { title, detail } = caption(current, activity, label, seconds, members.filter(isActive).length)
-    const scale = fitScale(SIZES[await read($, size)] ?? 1, e.props.maxRows)
-    const main = cellSize(WIDTH, HEIGHT, scale)
-    const mini = cellSize(MINI_WIDTH, MINI_HEIGHT, scale)
-    const elements = $.ui.resolve(e)
-    const { Box, Text } = elements
-    const art =
-      e.surface === 'terminal'
-        ? elements.Raster({ key: 'pet', columns: main.columns, rows: main.rows, cells: toCells(pixels, scale) })
-        : elements.Svg({ source: toSvg(pixels, SVG_SCALE * scale), alt: `Claude pet is ${current}` })
-
-    const room = e.props.bodyColumns - main.columns - CAPTION_COLUMNS - COLUMN_GAP * 2
-    const { shown, overflow } = fitCrew(members, room, Math.max(mini.columns, LABEL_COLUMNS) + 1)
-
-    const minis = shown.map((member, index) => {
-      const sprite = drawMini(member, tick + index, now)
-      const picture =
-        e.surface === 'terminal'
-          ? elements.Raster({ key: `crew-${member.id}`, columns: mini.columns, rows: mini.rows, cells: toCells(sprite, scale) })
-          : elements.Svg({ source: toSvg(sprite, SVG_SCALE * scale), alt: `${labelFor(member.kind)} subagent is ${member.status}` })
-      const note = noteFor(member, now)
-
-      return (
-        <Box key={member.id} flexDirection="column" width={Math.max(mini.columns, LABEL_COLUMNS)}>
-          {picture}
-          <Text bold color={hex(colorFor(member.kind))}>{clip(labelFor(member.kind), Math.max(mini.columns, LABEL_COLUMNS))}</Text>
-          <Text dimColor>{clip(note, Math.max(mini.columns, LABEL_COLUMNS))}</Text>
-        </Box>
-      )
+    return renderBand({
+      elements: $.ui.resolve(e),
+      surface: e.surface,
+      maxRows: e.props.maxRows,
+      bodyColumns: e.props.bodyColumns,
+      sizeName: await read($, size),
+      current,
+      activity,
+      label,
+      seconds,
+      tick,
+      now,
+      members,
     })
-
-    return (
-      <Box flexDirection="row" gap={COLUMN_GAP}>
-        {art}
-        {(shown.length > 0 || overflow) && (
-          <Box flexDirection="row" gap={1} marginTop={Math.max(0, main.rows - mini.rows - 2)}>
-            {minis}
-            {overflow && (
-              <Box flexDirection="column" width={OVERFLOW_COLUMNS} height={mini.rows + 2} justifyContent="center">
-                <Text bold color="claude">+{overflow.total} more</Text>
-                <Text dimColor>{overflow.working} working</Text>
-                {overflow.failed > 0 && <Text dimColor>{overflow.failed} failed</Text>}
-              </Box>
-            )}
-          </Box>
-        )}
-        <Box flexDirection="column" marginTop={Math.max(0, Math.floor((main.rows - 2) / 2))} width={CAPTION_COLUMNS}>
-          <Text bold color="claude">{title}</Text>
-          <Text dimColor>{detail}</Text>
-        </Box>
-      </Box>
-    )
   })
 }

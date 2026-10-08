@@ -1,4 +1,4 @@
-import type { Member } from '../../types'
+import type { Member, MemberStatus } from '../../types'
 
 export const OVERFLOW_COLUMNS = 10
 
@@ -26,3 +26,7 @@ export const fitCrew = (members: readonly Member[], room: number, slot: number):
     },
   }
 }
+
+export const isActive = (member: Member) => member.status === 'working'
+
+export const statusFor = (reason: string): MemberStatus => (reason === 'answer' ? 'done' : 'error')

@@ -132,7 +132,7 @@ claude plugin update tiny-pet@claude-pet
 
 - The pet does not show: run `/plugin` and confirm tiny-pet is enabled, then `/reload-plugins`. Run `/pet` in case it was hidden.
 - Colors look wrong: the terminal needs true-color support.
-- Flicker on a slow terminal: raise `WORK_TICK_MS` and `IDLE_TICK_MS` in `hooks/register.tsx`.
+- Flicker on a slow terminal: raise `WORK_TICK_MS` and `IDLE_TICK_MS` in `hooks/config.ts`.
 - Inspect load problems with `claude --debug`.
 
 ## Development
@@ -148,11 +148,18 @@ Layout:
 - `.claude-plugin/plugin.json`: mod manifest.
 - `.claude-plugin/marketplace.json`: makes this repository installable as a marketplace.
 - `hooks/hooks.json`: names the hooks module.
-- `hooks/register.tsx`: events, state and the band drawing.
-- `hooks/art/pixels.ts`: pixel canvas helpers and the shared color palette.
+- `hooks/register.tsx`: events, state atoms and the ticker. Everything that touches the harness lives here.
+- `hooks/config.ts`: timings and layout constants.
+- `hooks/format.ts`: small text and color formatters.
+- `hooks/view/band.tsx`: draws the band (pet, crew, caption) from plain data.
+- `hooks/logic/caption.ts`: caption title and detail text.
+- `hooks/logic/size.ts`: size names, scales and fitting to the available rows.
+- `hooks/art/pixels.ts`: pixel canvas helpers and the main color set. `hooks/art/palette.ts` holds colors shared by the pet and the mini pets.
 - `hooks/logic/activity.ts`: decides which personality applies from the tool in use, its timing and errors.
-- `hooks/art/pet.ts`: the main pet and laptop art for every state and personality. Change colors and shapes here.
-- `hooks/art/mini.ts`: the mini subagent pets, their desks and per-personality art.
+- `hooks/art/pet/`: the main pet and laptop art, one file per part (`screen`, `eyes`, `body`, `props`) assembled in `draw.ts`. Change colors and shapes here.
+- `hooks/art/mini/`: the mini subagent pets, split the same way, plus `desk.ts` and `identity.ts` (accent color, label, note), assembled in `draw.ts`.
+- `scripts/bump-version.py`: bumps the version in `plugin.json` from the files changed between two revisions.
+- `.github/workflows/bump-version.yml`: runs the script on pushes to `master` and commits the bump.
 - `docs/`: the preview images used by this README.
 - `hooks/logic/crew.ts`: the logic that fits the crew into the available width.
 - `hooks/render/render.ts`: converts the pixels to a terminal cell grid (half-block characters, scaled up or down) or an SVG.

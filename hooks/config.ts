@@ -1,0 +1,13 @@
+export const WORK_TICK_MS = 300
+export const IDLE_TICK_MS = 900
+export const REST_MS = 5000
+export const CREW_REST_MS = 3000
+export const ALERT_MS = 3000
+export const MAX_TRACKED = 64
+export const SVG_SCALE = 6
+export const SIZE_KEY = 'size'
+export const ARGUMENT_HINT = '[small|medium|large|hide|show]'
+export const USAGE = `Usage: /pet ${ARGUMENT_HINT}. With no argument it hides or shows the pet.`
+export const CAPTION_COLUMNS = 24
+export const COLUMN_GAP = 2
+export const LABEL_COLUMNS = 10

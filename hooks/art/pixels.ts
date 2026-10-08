@@ -25,6 +25,8 @@ export const C = {
   amber: 0xfbbf24,
 } as const
 
+export type Draw = (x: number, y: number, w: number, h: number, color: number) => void
+
 export type Point = readonly [number, number]
 
 export const canvas = (width = WIDTH, height = HEIGHT): Pixels =>
