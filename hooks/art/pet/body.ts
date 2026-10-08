@@ -13,8 +13,8 @@ export const drawArms = (mood: Mood, activity: Activity, frame: number, at: Draw
   const beat = frame % 2
   const isUp = mood === 'done' || (mood === 'working' && activity === 'alarmed')
   if (isUp) {
-    const top = 3 - beat
-    const length = 6 + beat
+    const top = 4 - beat
+    const length = 5 + beat
     for (const [outer, inner] of [[0, 1], [13, 12]]) {
       at(outer, top, 1, length, C.body)
       at(inner, top, 1, length, C.shade)
