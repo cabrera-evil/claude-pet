@@ -10,11 +10,11 @@ The pet with a crew of four subagents (reading, planning, taking a coffee break,
 
 The main pet in each of its personalities and states:
 
-![Main pet: thinking, coding, reading, running, browsing, testing, working, planning, delegating, asking, coffee, sleepy, error found, done, error, idle](docs/pet.png)
+![Main pet: thinking, coding, reading, running, browsing, testing, working, planning, delegating, asking, coffee, sleepy, error found, done, error, idle](docs/pet.gif)
 
 A subagent in each of its looks:
 
-![Subagent looks: thinking, coding, reading, running, browsing, testing, working, planning, delegating, asking, coffee, sleepy, alarmed, done, failed](docs/crew.png)
+![Subagent looks: thinking, coding, reading, running, browsing, testing, working, planning, delegating, asking, coffee, sleepy, alarmed, done, failed](docs/crew.gif)
 
 These images are drawn from the same pixel code the mod uses. The terminal shows them in true color with half-block characters, so they look the same up to the terminal's cell shape.
 

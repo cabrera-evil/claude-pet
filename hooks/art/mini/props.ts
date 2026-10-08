@@ -48,6 +48,8 @@ export const drawProps = (px: Pixels, activity: Activity, frame: number) => {
     case 'tooling':
       dots(px, C.amber, [[frame % 2 === 0 ? 9 : 17, 0]])
       break
+    case 'alarmed':
+      break
     case 'asking':
       ghost(px, question(10, frame % 2, 0.85))
       break
