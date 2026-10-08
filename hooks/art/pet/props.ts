@@ -1,15 +1,17 @@
 import { C, type Pixels, dots, fill } from '../pixels'
 import { COFFEE, PHONE_BAND, PHONE_CUP, BOOK_A, BOOK_B, BOOK_SPINE } from '../palette'
 import type { Activity } from '../../logic/activity'
-import { bang, cloud, ghost, question, wisp } from '../ghost'
+import { cloud, ghost, question, wisp } from '../ghost'
 import { drawZ } from './body'
 
 export const drawProps = (px: Pixels, activity: Activity, frame: number) => {
   switch (activity) {
     case 'coding':
-      fill(px, 3, 2, 8, 1, PHONE_BAND)
-      fill(px, 1, 3, 1, 4, PHONE_CUP)
-      fill(px, 12, 3, 1, 4, PHONE_CUP)
+      fill(px, 4, 1, 6, 1, PHONE_BAND)
+      fill(px, 2, 2, 2, 1, PHONE_BAND)
+      fill(px, 10, 2, 2, 1, PHONE_BAND)
+      fill(px, 0, 3, 2, 4, PHONE_CUP)
+      fill(px, 12, 3, 2, 4, PHONE_CUP)
       break
     case 'researching':
       fill(px, 2, 7, 4, 1, C.white)
@@ -48,9 +50,6 @@ export const drawProps = (px: Pixels, activity: Activity, frame: number) => {
       fill(px, 0, 10, 4, 4, C.edge)
       fill(px, 1, 11, 2, 3, C.green)
       dots(px, C.white, [[2, 9 - (frame % 2)], [1, 8 - (frame % 3 === 0 ? 1 : 0)]])
-      break
-    case 'alarmed':
-      ghost(px, [...bang(3, frame % 2, 3, 0.8), ...bang(9, frame % 2, 4, 0.95)], C.red)
       break
     case 'thinking':
       ghost(px, cloud(7, 0, 0.5))

@@ -1,12 +1,14 @@
 import { C, type Pixels, dots, fill } from '../pixels'
-import { bang, ghost, question, wisp, zed } from '../ghost'
+import { ghost, question, wisp, zed } from '../ghost'
 import { COFFEE, PHONE_BAND, PHONE_CUP, BOOK_A, BOOK_B, BOOK_SPINE } from '../palette'
 import type { Activity } from '../../logic/activity'
 
 export const drawProps = (px: Pixels, activity: Activity, frame: number) => {
   switch (activity) {
     case 'coding':
-      fill(px, 1, 1, 8, 1, PHONE_BAND)
+      fill(px, 3, 0, 4, 1, PHONE_BAND)
+      fill(px, 1, 1, 2, 1, PHONE_BAND)
+      fill(px, 7, 1, 2, 1, PHONE_BAND)
       fill(px, 0, 2, 1, 3, PHONE_CUP)
       fill(px, 9, 2, 1, 3, PHONE_CUP)
       break
@@ -32,9 +34,6 @@ export const drawProps = (px: Pixels, activity: Activity, frame: number) => {
       fill(px, 1, 5, 3, 3, C.edge)
       fill(px, 2, 6, 1, 2, C.green)
       dots(px, C.white, [[2, 4 - (frame % 2)]])
-      break
-    case 'alarmed':
-      ghost(px, [...bang(3, frame % 2, 3, 0.9), ...bang(6, frame % 2, 3, 0.9)], C.red)
       break
     case 'delegating':
       dots(px, C.shade, [[4, 1]])

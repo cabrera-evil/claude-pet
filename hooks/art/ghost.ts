@@ -27,9 +27,6 @@ export const zed = (x: number, y: number, size: number, alpha: number) =>
     ...span(size - 2).map((i): Point => [size - 2 - i, 1 + i]),
   ])
 
-export const bang = (x: number, y: number, height: number, alpha: number) =>
-  shape(x, y, alpha, [...span(height - 2).map((i): Point => [0, i]), [0, height - 1]])
-
 export const question = (x: number, y: number, alpha: number) =>
   shape(x, y, alpha, [[0, 0], [1, 0], [2, 0], [2, 1], [1, 2], [1, 4]])
 

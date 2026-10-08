@@ -23,11 +23,11 @@ export const drawPet = (px: Pixels, member: Mini, frame: number, activity: Activ
     at(9, isRaised ? 3 : 5, 1, 2, C.body)
     if (isTyping) fill(px, 9, 7, 1, 1, beat ? C.body : C.edge)
   } else if (status === 'done') {
-    dots(px, C.eye, [[3, 5 + hop], [4, 4 + hop], [5, 5 + hop], [6, 5 + hop], [7, 4 + hop], [8, 5 + hop]])
+    dots(px, C.eye, [[2, 5 + hop], [3, 4 + hop], [4, 5 + hop], [6, 5 + hop], [7, 4 + hop], [8, 5 + hop]])
     at(0, 3, 1, 2, C.body)
     at(9, 3, 1, 2, C.body)
   } else {
-    dots(px, C.eye, [[3, 4], [5, 4], [4, 5], [3, 6], [5, 6], [6, 4], [8, 4], [7, 5], [6, 6], [8, 6]])
+    dots(px, C.eye, [[2, 3], [4, 3], [3, 4], [2, 5], [4, 5], [6, 3], [8, 3], [7, 4], [6, 5], [8, 5]])
     dots(px, SWEAT, [[9, 2], [9, 3]])
     at(0, 6, 1, 2, C.body)
     at(9, 6, 1, 2, C.body)
