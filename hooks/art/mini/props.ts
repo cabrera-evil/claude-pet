@@ -1,4 +1,4 @@
-import { C, type Pixels, dots, fill } from '../pixels'
+import { C, type Pixels, dots, drawZs, fill } from '../pixels'
 import { COFFEE, PHONE_BAND, PHONE_CUP, BOOK_A, BOOK_B, BOOK_SPINE } from '../palette'
 import type { Activity } from '../../logic/activity'
 
@@ -40,9 +40,10 @@ export const drawProps = (px: Pixels, activity: Activity, frame: number) => {
       dots(px, frame % 2 === 0 ? C.amber : C.light, [[4, 0]])
       break
     case 'sleepy':
-      fill(px, 6, 0, 3, 1, frame % 2 === 0 ? C.white : C.slate)
-      fill(px, 6, 3, 3, 1, frame % 2 === 0 ? C.white : C.slate)
-      dots(px, frame % 2 === 0 ? C.white : C.slate, [[8, 1], [7, 2]])
+      drawZs(px, [
+        { x: 7, y: 1 + (frame % 2), size: 3, alpha: 0.4 },
+        { x: 11, y: 0 + (frame % 2), size: 4, alpha: 0.6 },
+      ])
       break
     case 'browsing':
       dots(px, C.blue, [[12 + (frame % 3) * 2, 0]])

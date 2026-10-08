@@ -46,7 +46,7 @@ While working, the main pet and every subagent act out what they are doing, judg
 | asking      | AskUserQuestion                                                   | A raised hand and a blinking question mark                           |
 | working     | Any other tool, including MCP tools                               | Blinking indicator lights on screen and a spark                      |
 | coffee      | Quiet for 6 seconds, or a Bash command running over 12 seconds   | Sips a mug of coffee with steam while it waits                       |
-| sleepy      | Quiet for 25 seconds                                              | Heavy eyelids, a dim screen and a floating Z                         |
+| sleepy      | Quiet for 25 seconds                                              | Heavy eyelids, a dim screen and floating Zzz that grow                         |
 | error found | A tool call returned an error, for 3 seconds                      | Arms up and a hop, a sweat drop, a flashing red warning on screen    |
 
 ### Subagent crew
