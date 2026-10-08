@@ -1,4 +1,4 @@
-import { C, type Draw, type Pixels, dots, fill } from '../pixels'
+import { C, type Draw, type Pixels } from '../pixels'
 import { ghost, zed } from '../ghost'
 import type { Mood } from '../../../types'
 import type { Activity } from '../../logic/activity'
@@ -9,17 +9,21 @@ export const drawZ = (px: Pixels, frame: number) => {
   ghost(px, [...zed(10, 2 + bob, 3, 0.35), ...zed(14, 1 + bob, 4, 0.5), ...zed(19, bob, 5, 0.65)])
 }
 
-export const drawArms = (px: Pixels, mood: Mood, activity: Activity, frame: number, at: Draw) => {
+export const drawArms = (mood: Mood, activity: Activity, frame: number, at: Draw) => {
   const beat = frame % 2
   const isUp = mood === 'done' || (mood === 'working' && activity === 'alarmed')
   if (isUp) {
-    at(0, 4 - beat, 2, 2, C.body)
-    at(12, 4 - beat, 2, 2, C.body)
+    const top = 3 - beat
+    const length = 6 + beat
+    for (const [outer, inner] of [[0, 1], [13, 12]]) {
+      at(outer, top, 1, length, C.body)
+      at(inner, top, 1, length, C.shade)
+      at(outer, top, 1, 1, C.light)
+    }
     return
   }
   const isTyping = mood === 'working' && TYPING.has(activity)
-  at(0, activity === 'asking' ? 4 + beat : 7 + (isTyping ? beat : 0), 2, 2, C.body)
-  at(12, 7, 2, 2, C.body)
-  fill(px, 13, 9, 2, 1, C.body)
-  if (isTyping && beat) fill(px, 14, 10, 2, 1, C.body)
+  at(1, activity === 'asking' ? 4 + beat : 7, 1, 2, C.body)
+  if (isTyping) at(12, 8 + beat, 2, 2, C.body)
+  else at(12, 7, 1, 2, C.body)
 }

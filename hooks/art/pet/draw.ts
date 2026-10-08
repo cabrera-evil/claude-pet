@@ -17,7 +17,7 @@ export const draw = (mood: Mood, frame: number, activity: Activity): Pixels => {
   at(11, 4, 1, 7, C.shade)
   at(2, 10, 10, 1, C.shade)
   for (const x of [3, 5, 8, 10]) at(x, 11, 1, 2, C.shade)
-  drawArms(px, mood, activity, frame, at)
+  drawArms(mood, activity, frame, at)
   drawEyes(mood, activity, frame, at, px)
   if (mood === 'working') drawProps(px, activity, frame)
   if (mood === 'idle') drawZ(px, frame)
