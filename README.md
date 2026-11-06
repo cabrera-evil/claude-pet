@@ -35,7 +35,7 @@ While working, the main pet and every subagent act out what they are doing, judg
 
 | Personality | When                                                              | What you see                                                         |
 | ----------- | ----------------------------------------------------------------- | -------------------------------------------------------------------- |
-| thinking    | Between tool calls                                                | Eyes look up, a thought cloud with cycling dots above the head, a blinking cursor |
+| thinking    | Between tool calls                                                | Eyes look up, three cycling dots above the head, a blinking cursor |
 | coding      | Edit, Write, MultiEdit, NotebookEdit                              | Headphones, hands typing, colored code scrolling                     |
 | reading     | Read, Grep, Glob, LS                                              | Wide scanning eyes, holding an open book up to read, a highlight moving over text |
 | running     | Bash                                                              | Squinting at a green terminal, a blinking status light               |

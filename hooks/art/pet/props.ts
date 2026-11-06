@@ -1,7 +1,7 @@
 import { C, type Pixels, dots, fill } from '../pixels'
 import { COFFEE, PHONE_BAND, PHONE_CUP, BOOK_A, BOOK_B, BOOK_SPINE } from '../palette'
 import type { Activity } from '../../logic/activity'
-import { cloud, ghost, question, wisp } from '../ghost'
+import { ghost, question, wisp } from '../ghost'
 import { drawZ } from './body'
 
 export const drawProps = (px: Pixels, activity: Activity, frame: number) => {
@@ -52,8 +52,7 @@ export const drawProps = (px: Pixels, activity: Activity, frame: number) => {
       dots(px, C.white, [[2, 9 - (frame % 2)], [1, 8 - (frame % 3 === 0 ? 1 : 0)]])
       break
     case 'thinking':
-      ghost(px, cloud(7, 0, 0.5))
-      for (const i of [0, 1, 2]) dots(px, i === frame % 3 ? C.white : C.key, [[8 + i * 2, 1]])
+      for (const i of [0, 1, 2]) dots(px, i === frame % 3 ? C.white : C.key, [[5 + i * 2, 0]])
       break
     case 'asking':
       ghost(px, question(10, frame % 2, 0.85))
