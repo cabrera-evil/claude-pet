@@ -52,7 +52,7 @@ export const drawProps = (px: Pixels, activity: Activity, frame: number) => {
       dots(px, C.white, [[2, 9 - (frame % 2)], [1, 8 - (frame % 3 === 0 ? 1 : 0)]])
       break
     case 'thinking':
-      for (const i of [0, 1, 2]) dots(px, i === frame % 3 ? C.white : C.key, [[5 + i * 2, 0]])
+      for (const i of [0, 1, 2]) dots(px, i === frame % 3 ? C.white : C.key, [[5 + i * 2, 1]])
       break
     case 'asking':
       ghost(px, question(10, frame % 2, 0.85))
